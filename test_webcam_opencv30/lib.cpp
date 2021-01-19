@@ -1,43 +1,77 @@
 #include "lib.h"
 
 ////////////////RED TO YELLOW///////////////////////////////////////////////////////////////
-Mat seuillage(Mat frame){
+Mat seuillage_red2yellow(Mat frame){
 using namespace cv;
-float nr = 0;
+float nr = 0; 
+while(1){
+// Capture frame-by-frame
+  // If the frame is empty, break immediately
+	    if (frame.empty())
+	      break;
 
-	while(1){
-			
-
-	    // If the frame is empty, break immediately
-	   		// if (frame.empty())
-	    	 	// break;
-
-		for (int i=0;i<frame.rows;i++)
-		{
-           	 for (int j=0;j<frame.cols;j++)
-		{
-		        uchar r,v,b;
-		        b=frame.at<Vec3b>(i,j)[0];
-		        v=frame.at<Vec3b>(i,j)[1];
-		        r=frame.at<Vec3b>(i,j)[2];
-		        nr=r/sqrt((r*r)+(b*b)+(v*v));
-		if(nr>0.7)
-		    {
-		        frame.at<Vec3b>(i,j)[0]=0;
-		        frame.at<Vec3b>(i,j)[1]=r;
-		        frame.at<Vec3b>(i,j)[2]=r;
-		    }
-	     else{
-		    frame.at<Vec3b>(i,j)[0]=b;
-		    frame.at<Vec3b>(i,j)[1]=v;
-		    frame.at<Vec3b>(i,j)[2]=r;
-		}
-		return (frame);
-	}
+for (int i=0;i<frame.rows;i++){
+            for (int j=0;j<frame.cols;j++){
+                uchar r,v,b;
+                b=frame.at<Vec3b>(i,j)[0];
+                v=frame.at<Vec3b>(i,j)[1];
+                r=frame.at<Vec3b>(i,j)[2];
+                nr=r/sqrt((r*r)+(b*b)+(v*v));
+	if(nr>0.7)
+            {
+                frame.at<Vec3b>(i,j)[0]=0;
+                frame.at<Vec3b>(i,j)[1]=r;
+                frame.at<Vec3b>(i,j)[2]=r;
+              }
+     else{
+            frame.at<Vec3b>(i,j)[0]=b;
+            frame.at<Vec3b>(i,j)[1]=v;
+            frame.at<Vec3b>(i,j)[2]=r;
 	}
 }
 }
-///////////////////////////////////////////////////////////////////////////////////////
+
+return (frame);
+
+}
+}
+
+Mat seuillage_red2purple(Mat frame){
+using namespace cv;
+float nr = 0; 
+while(1){
+// Capture frame-by-frame
+  // If the frame is empty, break immediately
+	    if (frame.empty())
+	      break;
+
+for (int i=0;i<frame.rows;i++){
+            for (int j=0;j<frame.cols;j++){
+                uchar r,v,b;
+                b=frame.at<Vec3b>(i,j)[0];
+                v=frame.at<Vec3b>(i,j)[1];
+                r=frame.at<Vec3b>(i,j)[2];
+                nr=r/sqrt((r*r)+(b*b)+(v*v));
+	if(nr>0.7)
+            {
+                frame.at<Vec3b>(i,j)[0]=r;
+                frame.at<Vec3b>(i,j)[1]=0;
+                frame.at<Vec3b>(i,j)[2]=r;
+              }
+     else{
+            frame.at<Vec3b>(i,j)[0]=b;
+            frame.at<Vec3b>(i,j)[1]=v;
+            frame.at<Vec3b>(i,j)[2]=r;
+	}
+}
+}
+
+return (frame);
+
+}
+}
+
+/////////////////////det_contour//////////////////////////////////////////////////////////////////
 
 Mat det_contour(Mat frame)
 {
@@ -46,9 +80,7 @@ Mat det_contour(Mat frame)
 	cvtColor(frame,frame_grayt,CV_BGR2GRAY);
 	frame_out.create(frame.rows,frame.cols,CV_8UC1);
 
-	    // If the frame is empty, break immediately
-	    
-
+	    // If the frame is empty, break immediatel
 		for (int i=1;i<frame.rows;i++)
 		{
 			for (int j=1;j<frame.cols;j++)
@@ -65,4 +97,13 @@ Mat det_contour(Mat frame)
 			}
 		}
 	return (frame_out);
+}
+
+////////////////Black and white ////////////////
+
+Mat black_and_white(Mat frame)
+{
+	Mat in_grayt;
+	cvtColor(frame, in_grayt,CV_BGR2GRAY);
+	return in_grayt;
 }

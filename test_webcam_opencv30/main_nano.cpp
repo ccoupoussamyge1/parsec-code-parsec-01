@@ -11,7 +11,8 @@ std::string gstreamer_pipeline (int capture_width, int capture_height, int displ
 }
 int main(int, char**)
 { 
- int capture_width = 1280 ;
+
+int capture_width = 1280 ;
     int capture_height = 720 ;
     int display_width = 1280 ;
     int display_height = 720 ;
@@ -31,12 +32,12 @@ if(!cap.isOpened())  // check if we succeeded
     Mat frame,frame_out;
 	cap >> frame;
         // Display the resulting frame
-        //imshow( "Frame", frame);
+        imshow( "Frame", frame);
         // Press  ESC on keyboard to exit
 
 
 	char c=(char)waitKey(25);
-
+if(c==27) break;
 	if(c=='a')
 	{
 		Mat det = det_contour(frame);
@@ -45,11 +46,24 @@ if(!cap.isOpened())  // check if we succeeded
 	
 	if (c=='b')
 	{
-		Mat seuil = seuillage(frame);
-		imshow("seuillage_couleur", seuil);
+		
+		Mat seuil1 = seuillage_red2yellow(frame);
+		imshow("red2yellow", seuil1);
 	}
 	
-
+	if (c=='c')
+	{
+		
+		Mat seuil2 = seuillage_red2purple(frame);
+		imshow("red2purple", seuil2);
+	}
+	if (c=='d')
+	{
+		Mat BW = black_and_white(frame);
+		imshow("black_and_white", BW);
+	}
+	
+//imshow( "Frame", frame);
        
       }
       // When everything done, release the video capture object

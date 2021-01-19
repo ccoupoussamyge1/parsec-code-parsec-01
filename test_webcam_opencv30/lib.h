@@ -10,6 +10,8 @@
 
 using namespace cv;
 Mat det_contour (Mat frame);
-Mat seuillage  (Mat frame);
+Mat seuillage_red2yellow (Mat frame);
+Mat seuillage_red2purple (Mat frame);
+Mat black_and_white(Mat frame);
 
 #endif
